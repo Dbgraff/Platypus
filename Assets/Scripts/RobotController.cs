@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class RobotController_Tank : MonoBehaviour
+public class RobotController : MonoBehaviour
 {
     [Header("Wheel Colliders")]
     [SerializeField] private WheelCollider[] leftWheels;
@@ -9,24 +9,22 @@ public class RobotController_Tank : MonoBehaviour
 
     [Header("Power")]
     [SerializeField] private float maxMotorForce = 200f;
-    [SerializeField] private float maxBrakeForce = 300f;
     [SerializeField] private float maxForwardSpeed = 6f;
     [SerializeField] private float maxReverseSpeed = 3f;
 
     [Header("Keyboard Mode")]
-    [SerializeField] private bool useSplitKeyboardControls = true;  // true = W/S + O/L, false = WASD классика
-    [SerializeField] private KeyCode toggleModeKey = KeyCode.M;
+    [SerializeField] private bool startInSplitMode = true; // раздельный режим по умолчанию
 
     private RobotControls controls;
     private Rigidbody rb;
 
+    // Входы
     private float leftTrackInput = 0f;
     private float rightTrackInput = 0f;
-
-    // Для классического режима
-    private float throttleInput = 0f;
+    private float throttleInput = 0f; 
     private float steerInput = 0f;
 
+    private bool isSplitMode = true;     // текущий режим клавиатуры
     private bool isGamepadConnected => Gamepad.current != null;
 
     void Awake()
@@ -35,55 +33,54 @@ public class RobotController_Tank : MonoBehaviour
         controls = new RobotControls();
         controls.Robot.Enable();
 
-        // Подписка на события (для геймпада и раздельной клавиатуры)
+        // Подписка на события
         controls.Robot.LeftTrack.performed += ctx => leftTrackInput = ctx.ReadValue<float>();
         controls.Robot.LeftTrack.canceled += ctx => leftTrackInput = 0f;
 
         controls.Robot.RightTrack.performed += ctx => rightTrackInput = ctx.ReadValue<float>();
         controls.Robot.RightTrack.canceled += ctx => rightTrackInput = 0f;
 
-        // Для классического режима
         controls.Robot.Throttle.performed += ctx => throttleInput = ctx.ReadValue<float>();
         controls.Robot.Throttle.canceled += ctx => throttleInput = 0f;
+
         controls.Robot.Steer.performed += ctx => steerInput = ctx.ReadValue<float>();
         controls.Robot.Steer.canceled += ctx => steerInput = 0f;
+
+        controls.Robot.ToggleControlMode.performed += ctx => ToggleMode();
+
+        isSplitMode = startInSplitMode;
     }
 
-    void Update()
+    private void ToggleMode()
     {
-        //// Переключение режима клавиатуры (только если нет геймпада)
-        //if (!isGamepadConnected && Input.GetKeyDown(toggleModeKey))
-        //{
-        //    useSplitKeyboardControls = !useSplitKeyboardControls;
-        //    Debug.Log($"Keyboard control mode: {(useSplitKeyboardControls ? "SPLIT (W/S + O/L)" : "CLASSIC (WASD)")}");
-        //}
+        if (!isGamepadConnected)
+        {
+            isSplitMode = !isSplitMode;
+            Debug.Log($"Keyboard mode: {(isSplitMode ? "SPLIT (W/S + O/L)" : "CLASSIC WASD (W/S = forward/back, A/D = turn)")}");
+        }
     }
 
     void FixedUpdate()
     {
         float left = 0f, right = 0f;
-        bool isReversing = false;
 
         if (isGamepadConnected)
         {
-            // Геймпад всегда в раздельном режиме
             left = leftTrackInput;
             right = rightTrackInput;
         }
         else
         {
-            if (useSplitKeyboardControls)
+            if (isSplitMode)
             {
-                // Раздельное управление клавой (W/S левая, O/L правая)
+                // Раздельное управление клавиатурой
                 left = leftTrackInput;
                 right = rightTrackInput;
             }
             else
             {
-                // Классическое WASD: пересчитываем в раздельные сигналы
                 float forward = throttleInput;
                 float turn = steerInput;
-
                 left = Mathf.Clamp(forward + turn, -1f, 1f);
                 right = Mathf.Clamp(forward - turn, -1f, 1f);
             }
@@ -95,40 +92,28 @@ public class RobotController_Tank : MonoBehaviour
     private void ApplyTrackForces(float leftInput, float rightInput)
     {
         float speed = rb.linearVelocity.magnitude;
-        bool movingForward = Vector3.Dot(rb.linearVelocity, transform.forward) > 0;
 
-        // Ограничение скорости
-        float leftTorque = 0f, rightTorque = 0f;
-        float leftBrake = 0f, rightBrake = 0f;
+        float leftTorque = CalculateTorque(leftInput, speed);
+        float rightTorque = CalculateTorque(rightInput, speed);
 
-        // Левая гусеница
-        if (Mathf.Abs(leftInput) > 0.05f)
-        {
-            float targetDir = Mathf.Sign(leftInput);
-            float speedFactor = (targetDir > 0) ? Mathf.Clamp01(1f - speed / maxForwardSpeed) : Mathf.Clamp01(1f - speed / maxReverseSpeed);
-            leftTorque = leftInput * maxMotorForce * speedFactor;
-        }
-        else
-        {
-            // имитация сопротивления
-            leftBrake = maxBrakeForce * 0.2f;
-        }
+        foreach (var w in leftWheels) if (w) w.motorTorque = leftTorque;
+        foreach (var w in rightWheels) if (w) w.motorTorque = rightTorque;
+    }
 
-        // Правая гусеница
-        if (Mathf.Abs(rightInput) > 0.05f)
-        {
-            float targetDir = Mathf.Sign(rightInput);
-            float speedFactor = (targetDir > 0) ? Mathf.Clamp01(1f - speed / maxForwardSpeed) : Mathf.Clamp01(1f - speed / maxReverseSpeed);
-            rightTorque = rightInput * maxMotorForce * speedFactor;
-        }
-        else
-        {
-            rightBrake = maxBrakeForce * 0.2f;
-        }
+    private float CalculateTorque(float input, float currentSpeed)
+    {
+        if (Mathf.Abs(input) < 0.05f) return 0f;
 
-        // Применяем к колёсам
-        foreach (var w in leftWheels) { if (w) { w.motorTorque = leftTorque; w.brakeTorque = leftBrake; } }
-        foreach (var w in rightWheels) { if (w) { w.motorTorque = rightTorque; w.brakeTorque = rightBrake; } }
+        float targetDirection = Mathf.Sign(input);
+        float maxAllowedSpeed = (targetDirection > 0) ? maxForwardSpeed : maxReverseSpeed;
+
+        // Если скорость уже превышает лимит в этом направлении, не добавляем момент
+        float speedInDirection = Vector3.Dot(rb.linearVelocity, transform.forward) * targetDirection;
+        if (speedInDirection >= maxAllowedSpeed) return 0f;
+
+        // Плавное ограничение при приближении к макс. скорости
+        float speedFactor = Mathf.Clamp01(1f - speedInDirection / maxAllowedSpeed);
+        return input * maxMotorForce * speedFactor;
     }
 
     private void OnDestroy() => controls?.Dispose();

@@ -102,15 +102,6 @@ public partial class @RobotControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Brake"",
-                    ""type"": ""Value"",
-                    ""id"": ""94e34b99-2221-489f-be3d-41c855b6c7f5"",
-                    ""expectedControlType"": ""Axis"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
                     ""name"": ""Steer"",
                     ""type"": ""Value"",
                     ""id"": ""26f4be2c-b58a-4a9e-a402-b279c205a923"",
@@ -136,86 +127,18 @@ public partial class @RobotControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ToggleControlMode"",
+                    ""type"": ""Button"",
+                    ""id"": ""45eaae94-c17c-4827-91c8-be5f72bf84bc"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""063c272b-e5f7-464d-992a-be4b278d862b"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Throttle"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d88b49da-5e88-4f9e-bcf9-b0159eead28d"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Throttle"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a0156982-cc1a-4812-abe2-07a02a53c17c"",
-                    ""path"": ""<Gamepad>/leftTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Brake"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""1a70d9e8-9c9f-42ff-979c-c99117ad8fe6"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Brake"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""1D Axis"",
-                    ""id"": ""eee8d2e6-1541-482f-8361-e347b0319fc0"",
-                    ""path"": ""1DAxis"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Steer"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""negative"",
-                    ""id"": ""a69fdc42-9ab1-4ecc-869a-aa8ff3086559"",
-                    ""path"": ""<Gamepad>/rightStick/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Steer"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""positive"",
-                    ""id"": ""cc801430-41cc-4339-967c-db66c5a4526e"",
-                    ""path"": ""<Gamepad>/rightStick/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Steer"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
                 {
                     ""name"": ""1D Axis"",
                     ""id"": ""f4d73f2a-12b6-45c9-94e4-6d919acc1a2c"",
@@ -336,6 +259,50 @@ public partial class @RobotControls: IInputActionCollection2, IDisposable
                     ""action"": ""LeftTrack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""14fc3570-d912-47d2-8423-a9b50b4c4d7c"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Throttle"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""3e97747c-f06a-4df2-8b29-b02b00a1b007"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Throttle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""ebb9317b-84c8-4477-adbb-c5ac2c07d6d8"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Throttle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""800af14b-3475-486a-aa21-aa156a457ce9"",
+                    ""path"": ""<Keyboard>/m"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleControlMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -373,10 +340,10 @@ public partial class @RobotControls: IInputActionCollection2, IDisposable
         // Robot
         m_Robot = asset.FindActionMap("Robot", throwIfNotFound: true);
         m_Robot_Throttle = m_Robot.FindAction("Throttle", throwIfNotFound: true);
-        m_Robot_Brake = m_Robot.FindAction("Brake", throwIfNotFound: true);
         m_Robot_Steer = m_Robot.FindAction("Steer", throwIfNotFound: true);
         m_Robot_LeftTrack = m_Robot.FindAction("LeftTrack", throwIfNotFound: true);
         m_Robot_RightTrack = m_Robot.FindAction("RightTrack", throwIfNotFound: true);
+        m_Robot_ToggleControlMode = m_Robot.FindAction("ToggleControlMode", throwIfNotFound: true);
         // Camera
         m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
         m_Camera_Look = m_Camera.FindAction("Look", throwIfNotFound: true);
@@ -462,10 +429,10 @@ public partial class @RobotControls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Robot;
     private List<IRobotActions> m_RobotActionsCallbackInterfaces = new List<IRobotActions>();
     private readonly InputAction m_Robot_Throttle;
-    private readonly InputAction m_Robot_Brake;
     private readonly InputAction m_Robot_Steer;
     private readonly InputAction m_Robot_LeftTrack;
     private readonly InputAction m_Robot_RightTrack;
+    private readonly InputAction m_Robot_ToggleControlMode;
     /// <summary>
     /// Provides access to input actions defined in input action map "Robot".
     /// </summary>
@@ -482,10 +449,6 @@ public partial class @RobotControls: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Throttle => m_Wrapper.m_Robot_Throttle;
         /// <summary>
-        /// Provides access to the underlying input action "Robot/Brake".
-        /// </summary>
-        public InputAction @Brake => m_Wrapper.m_Robot_Brake;
-        /// <summary>
         /// Provides access to the underlying input action "Robot/Steer".
         /// </summary>
         public InputAction @Steer => m_Wrapper.m_Robot_Steer;
@@ -497,6 +460,10 @@ public partial class @RobotControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Robot/RightTrack".
         /// </summary>
         public InputAction @RightTrack => m_Wrapper.m_Robot_RightTrack;
+        /// <summary>
+        /// Provides access to the underlying input action "Robot/ToggleControlMode".
+        /// </summary>
+        public InputAction @ToggleControlMode => m_Wrapper.m_Robot_ToggleControlMode;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -526,9 +493,6 @@ public partial class @RobotControls: IInputActionCollection2, IDisposable
             @Throttle.started += instance.OnThrottle;
             @Throttle.performed += instance.OnThrottle;
             @Throttle.canceled += instance.OnThrottle;
-            @Brake.started += instance.OnBrake;
-            @Brake.performed += instance.OnBrake;
-            @Brake.canceled += instance.OnBrake;
             @Steer.started += instance.OnSteer;
             @Steer.performed += instance.OnSteer;
             @Steer.canceled += instance.OnSteer;
@@ -538,6 +502,9 @@ public partial class @RobotControls: IInputActionCollection2, IDisposable
             @RightTrack.started += instance.OnRightTrack;
             @RightTrack.performed += instance.OnRightTrack;
             @RightTrack.canceled += instance.OnRightTrack;
+            @ToggleControlMode.started += instance.OnToggleControlMode;
+            @ToggleControlMode.performed += instance.OnToggleControlMode;
+            @ToggleControlMode.canceled += instance.OnToggleControlMode;
         }
 
         /// <summary>
@@ -552,9 +519,6 @@ public partial class @RobotControls: IInputActionCollection2, IDisposable
             @Throttle.started -= instance.OnThrottle;
             @Throttle.performed -= instance.OnThrottle;
             @Throttle.canceled -= instance.OnThrottle;
-            @Brake.started -= instance.OnBrake;
-            @Brake.performed -= instance.OnBrake;
-            @Brake.canceled -= instance.OnBrake;
             @Steer.started -= instance.OnSteer;
             @Steer.performed -= instance.OnSteer;
             @Steer.canceled -= instance.OnSteer;
@@ -564,6 +528,9 @@ public partial class @RobotControls: IInputActionCollection2, IDisposable
             @RightTrack.started -= instance.OnRightTrack;
             @RightTrack.performed -= instance.OnRightTrack;
             @RightTrack.canceled -= instance.OnRightTrack;
+            @ToggleControlMode.started -= instance.OnToggleControlMode;
+            @ToggleControlMode.performed -= instance.OnToggleControlMode;
+            @ToggleControlMode.canceled -= instance.OnToggleControlMode;
         }
 
         /// <summary>
@@ -708,13 +675,6 @@ public partial class @RobotControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnThrottle(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Brake" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnBrake(InputAction.CallbackContext context);
-        /// <summary>
         /// Method invoked when associated input action "Steer" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
@@ -735,6 +695,13 @@ public partial class @RobotControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnRightTrack(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ToggleControlMode" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnToggleControlMode(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Camera" which allows adding and removing callbacks.

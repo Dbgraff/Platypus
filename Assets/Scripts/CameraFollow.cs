@@ -15,12 +15,17 @@ public class RobotFirstPersonCamera : MonoBehaviour
     [SerializeField] private float mouseSensitivity = 2f;
 
     [Header("Position")]
-    [SerializeField] private Vector3 localOffset = new Vector3(0f, 0.5f, 0.2f); // смещение внутри робота
+    [SerializeField] private Vector3 localOffset = new Vector3(0f, 0.5f, 0.2f);
+
+    [Header("Cursor Lock")]
+    [SerializeField] private bool lockCursorOnStart = true;
+    [SerializeField] private bool lockOnMouseClick = true;
 
     private RobotControls controls;
     private Vector2 lookInput;
     private float yawOffset = 0f;
     private float pitchOffset = 0f;
+    private bool cursorLocked = true;
 
     void Awake()
     {
@@ -35,6 +40,12 @@ public class RobotFirstPersonCamera : MonoBehaviour
         if (robotBody == null)
             robotBody = transform.parent; // предполагаем, что камера внутри робота
         transform.localPosition = localOffset;
+
+        if (lockCursorOnStart)
+        {
+            cursorLocked = true;
+            UpdateCursorLock();
+        }
     }
 
     void LateUpdate()
@@ -63,6 +74,26 @@ public class RobotFirstPersonCamera : MonoBehaviour
 
         // Камера следует за роботом, но сохраняет смещение в локальных координатах
         transform.position = robotBody.position + robotBody.TransformDirection(localOffset);
+
+        if (lockOnMouseClick && !cursorLocked && Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            cursorLocked = true;
+            UpdateCursorLock();
+        }
+    }
+
+    private void UpdateCursorLock()
+    {
+        if (cursorLocked)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
 
     public void ResetView()
@@ -71,5 +102,10 @@ public class RobotFirstPersonCamera : MonoBehaviour
         pitchOffset = 0f;
     }
 
-    void OnDestroy() => controls?.Dispose();
+    void OnDestroy()
+    {
+        controls?.Dispose();
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
 }
