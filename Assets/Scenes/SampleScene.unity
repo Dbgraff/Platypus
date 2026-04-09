@@ -521,9 +521,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 401552706}
   serializedVersion: 5
-  m_Mass: 35
+  m_Mass: 100
   m_LinearDamping: 0.3
-  m_AngularDamping: 1
+  m_AngularDamping: 3.5
   m_CenterOfMass: {x: 0, y: -0.15, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -539,7 +539,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 80
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!4 &401552708
 Transform:
   m_ObjectHideFlags: 0
@@ -599,9 +599,10 @@ MonoBehaviour:
   - {fileID: 722330033}
   maxMotorForce: 20
   maxBrakeForce: 50
-  maxSpeed: 5
-  throttleSensitivity: 0.9
-  brakeSensitivity: 1
+  maxForwardSpeed: 6
+  maxReverseSpeed: 3
+  useSplitKeyboardControls: 1
+  toggleModeKey: 109
 --- !u!114 &401552711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3295,15 +3296,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c526251d6902a640920f6b7f7f839a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraFollow
-  target: {fileID: 401552708}
-  offset: {x: 0, y: 1, z: -3}
+  robotBody: {fileID: 401552708}
+  maxHorizontalAngle: 60
+  maxVerticalAngle: 45
+  gamepadSensitivity: 1.5
   mouseSensitivity: 2.5
-  pitchMin: -80
-  pitchMax: 80
-  zoomSpeed: 20
-  minDistance: 3
-  maxDistance: 6
-  smoothSpeed: 0.125
+  localOffset: {x: 0, y: 0.5, z: 0.2}
 --- !u!114 &2118256309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3387,7 +3385,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
   orthographic: 0

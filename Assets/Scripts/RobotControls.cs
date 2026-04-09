@@ -118,6 +118,24 @@ public partial class @RobotControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""LeftTrack"",
+                    ""type"": ""Value"",
+                    ""id"": ""4f6d733c-9a54-490c-b10a-f0c1b890354b"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""RightTrack"",
+                    ""type"": ""Value"",
+                    ""id"": ""158c8ee2-91ef-479b-9ea1-a5892bc2350e"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -230,6 +248,94 @@ public partial class @RobotControls: IInputActionCollection2, IDisposable
                     ""action"": ""Steer"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ba74ff09-cf8f-4cd0-bc1e-5d32c610c06b"",
+                    ""path"": ""<Gamepad>/rightStick/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightTrack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""0abcf89e-187a-4a16-8cba-bda73cb343ae"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightTrack"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""17a0cf23-7fb2-4c0d-9548-7c1becde0cfb"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightTrack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""5529b1ff-73f2-4555-8196-4d355822c92c"",
+                    ""path"": ""<Keyboard>/o"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightTrack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""55e1495f-fab8-4bd1-b1e3-1d7a936202eb"",
+                    ""path"": ""<Gamepad>/leftStick/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftTrack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""7a93d916-2c4d-4e37-ae7a-9e1189d655e9"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftTrack"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""b95be034-1802-4bf6-8a7b-dbdcc2b07da9"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftTrack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""5fb46be3-226f-4b95-8a5a-bfdadb93168d"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftTrack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -269,6 +375,8 @@ public partial class @RobotControls: IInputActionCollection2, IDisposable
         m_Robot_Throttle = m_Robot.FindAction("Throttle", throwIfNotFound: true);
         m_Robot_Brake = m_Robot.FindAction("Brake", throwIfNotFound: true);
         m_Robot_Steer = m_Robot.FindAction("Steer", throwIfNotFound: true);
+        m_Robot_LeftTrack = m_Robot.FindAction("LeftTrack", throwIfNotFound: true);
+        m_Robot_RightTrack = m_Robot.FindAction("RightTrack", throwIfNotFound: true);
         // Camera
         m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
         m_Camera_Look = m_Camera.FindAction("Look", throwIfNotFound: true);
@@ -356,6 +464,8 @@ public partial class @RobotControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Robot_Throttle;
     private readonly InputAction m_Robot_Brake;
     private readonly InputAction m_Robot_Steer;
+    private readonly InputAction m_Robot_LeftTrack;
+    private readonly InputAction m_Robot_RightTrack;
     /// <summary>
     /// Provides access to input actions defined in input action map "Robot".
     /// </summary>
@@ -379,6 +489,14 @@ public partial class @RobotControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Robot/Steer".
         /// </summary>
         public InputAction @Steer => m_Wrapper.m_Robot_Steer;
+        /// <summary>
+        /// Provides access to the underlying input action "Robot/LeftTrack".
+        /// </summary>
+        public InputAction @LeftTrack => m_Wrapper.m_Robot_LeftTrack;
+        /// <summary>
+        /// Provides access to the underlying input action "Robot/RightTrack".
+        /// </summary>
+        public InputAction @RightTrack => m_Wrapper.m_Robot_RightTrack;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -414,6 +532,12 @@ public partial class @RobotControls: IInputActionCollection2, IDisposable
             @Steer.started += instance.OnSteer;
             @Steer.performed += instance.OnSteer;
             @Steer.canceled += instance.OnSteer;
+            @LeftTrack.started += instance.OnLeftTrack;
+            @LeftTrack.performed += instance.OnLeftTrack;
+            @LeftTrack.canceled += instance.OnLeftTrack;
+            @RightTrack.started += instance.OnRightTrack;
+            @RightTrack.performed += instance.OnRightTrack;
+            @RightTrack.canceled += instance.OnRightTrack;
         }
 
         /// <summary>
@@ -434,6 +558,12 @@ public partial class @RobotControls: IInputActionCollection2, IDisposable
             @Steer.started -= instance.OnSteer;
             @Steer.performed -= instance.OnSteer;
             @Steer.canceled -= instance.OnSteer;
+            @LeftTrack.started -= instance.OnLeftTrack;
+            @LeftTrack.performed -= instance.OnLeftTrack;
+            @LeftTrack.canceled -= instance.OnLeftTrack;
+            @RightTrack.started -= instance.OnRightTrack;
+            @RightTrack.performed -= instance.OnRightTrack;
+            @RightTrack.canceled -= instance.OnRightTrack;
         }
 
         /// <summary>
@@ -591,6 +721,20 @@ public partial class @RobotControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSteer(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "LeftTrack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnLeftTrack(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "RightTrack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnRightTrack(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Camera" which allows adding and removing callbacks.
