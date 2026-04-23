@@ -46,27 +46,30 @@ public class WheelStiffnessSwitcher : MonoBehaviour
 
     void FixedUpdate()
     {
-        // Определяем среднее покрытие под всеми колёсами (или под центром масс)
-        int dominantLayer = GetDominantTerrainLayer(transform.position);
-        if (dominantLayer < 0 || dominantLayer >= surfaceStiffnesses.Length)
-            return;
-
-        SurfaceStiffness target = surfaceStiffnesses[dominantLayer];
-
-        // Применяем stiffness ко всем колёсам
         foreach (WheelCollider wc in wheelColliders)
         {
-            if (wc == null) continue;
+            if (wc == null || !wc.isGrounded) continue;
 
-            // Продольное трение
-            WheelFrictionCurve forwardFriction = wc.forwardFriction;
-            forwardFriction.stiffness = target.forwardStiffness;
-            wc.forwardFriction = forwardFriction;
+            WheelHit hit;
+            if (wc.GetGroundHit(out hit))
+            {
+                // Определяем слой террейна в точке контакта колеса
+                int layerIndex = GetDominantTerrainLayer(hit.point);
+                if (layerIndex >= 0 && layerIndex < surfaceStiffnesses.Length)
+                {
+                    SurfaceStiffness target = surfaceStiffnesses[layerIndex];
 
-            // Поперечное трение
-            WheelFrictionCurve sidewaysFriction = wc.sidewaysFriction;
-            sidewaysFriction.stiffness = target.sidewaysStiffness;
-            wc.sidewaysFriction = sidewaysFriction;
+                    // Продольное трение
+                    WheelFrictionCurve forwardFriction = wc.forwardFriction;
+                    forwardFriction.stiffness = target.forwardStiffness;
+                    wc.forwardFriction = forwardFriction;
+
+                    // Поперечное трение
+                    WheelFrictionCurve sidewaysFriction = wc.sidewaysFriction;
+                    sidewaysFriction.stiffness = target.sidewaysStiffness;
+                    wc.sidewaysFriction = sidewaysFriction;
+                }
+            }
         }
     }
 

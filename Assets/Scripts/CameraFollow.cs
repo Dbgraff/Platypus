@@ -1,111 +1,24 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class RobotFirstPersonCamera : MonoBehaviour
+public class FixedRobotCamera : MonoBehaviour
 {
-    [Header("Target (Robot)")]
-    [SerializeField] private Transform robotBody; // сам робот (или его голова)
+    [SerializeField] private Transform robotBody;
+    [SerializeField] private Vector3 localOffset = new Vector3(0f, 0f, 0.88f);
 
-    [Header("Camera Rotation Limits")]
-    [SerializeField] private float maxHorizontalAngle = 60f;   // влево-вправо от forward
-    [SerializeField] private float maxVerticalAngle = 45f;     // вверх-вниз
-
-    [Header("Sensitivity")]
-    [SerializeField] private float gamepadSensitivity = 2f;
-    [SerializeField] private float mouseSensitivity = 2f;
-
-    [Header("Position")]
-    [SerializeField] private Vector3 localOffset = new Vector3(0f, 0.5f, 0.2f);
-
-    [Header("Cursor Lock")]
-    [SerializeField] private bool lockCursorOnStart = true;
-    [SerializeField] private bool lockOnMouseClick = true;
-
-    private RobotControls controls;
-    private Vector2 lookInput;
-    private float yawOffset = 0f;
-    private float pitchOffset = 0f;
-    private bool cursorLocked = true;
-
-    void Awake()
-    {
-        controls = new RobotControls();
-        controls.Camera.Enable();
-        controls.Camera.Look.performed += ctx => lookInput = ctx.ReadValue<Vector2>();
-        controls.Camera.Look.canceled += ctx => lookInput = Vector2.zero;
-    }
-
-    void Start()
+    private void Start()
     {
         if (robotBody == null)
-            robotBody = transform.parent; // предполагаем, что камера внутри робота
-        transform.localPosition = localOffset;
+            robotBody = transform.parent;
 
-        if (lockCursorOnStart)
-        {
-            cursorLocked = true;
-            UpdateCursorLock();
-        }
+        transform.localPosition = localOffset;
+        transform.localRotation = Quaternion.identity;
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
         if (robotBody == null) return;
 
-        Vector2 input = Vector2.zero;
-        if (Gamepad.current != null)
-        {
-            input = lookInput * gamepadSensitivity * Time.deltaTime;
-        }
-        else
-        {
-            input = Mouse.current.delta.ReadValue() * mouseSensitivity * 0.01f;
-        }
-
-        yawOffset += input.x;
-        pitchOffset -= input.y;
-        yawOffset = Mathf.Clamp(yawOffset, -maxHorizontalAngle, maxHorizontalAngle);
-        pitchOffset = Mathf.Clamp(pitchOffset, -maxVerticalAngle, maxVerticalAngle);
-
-        // Вращение камеры относительно робота
-        Quaternion robotRotation = robotBody.rotation;
-        Quaternion cameraRotation = robotRotation * Quaternion.Euler(pitchOffset, yawOffset, 0f);
-        transform.rotation = cameraRotation;
-
-        // Камера следует за роботом, но сохраняет смещение в локальных координатах
         transform.position = robotBody.position + robotBody.TransformDirection(localOffset);
-
-        if (lockOnMouseClick && !cursorLocked && Mouse.current.leftButton.wasPressedThisFrame)
-        {
-            cursorLocked = true;
-            UpdateCursorLock();
-        }
-    }
-
-    private void UpdateCursorLock()
-    {
-        if (cursorLocked)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-    }
-
-    public void ResetView()
-    {
-        yawOffset = 0f;
-        pitchOffset = 0f;
-    }
-
-    void OnDestroy()
-    {
-        controls?.Dispose();
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        transform.rotation = robotBody.rotation;
     }
 }
