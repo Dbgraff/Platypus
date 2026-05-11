@@ -504,10 +504,10 @@ GameObject:
   - component: {fileID: 401552708}
   - component: {fileID: 401552707}
   - component: {fileID: 401552710}
+  - component: {fileID: 401552709}
   - component: {fileID: 401552711}
   - component: {fileID: 401552713}
   - component: {fileID: 401552714}
-  - component: {fileID: 401552715}
   m_Layer: 0
   m_Name: Robot
   m_TagString: Untagged
@@ -523,7 +523,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 401552706}
   serializedVersion: 5
-  m_Mass: 150
+  m_Mass: 100
   m_LinearDamping: 0.3
   m_AngularDamping: 3.5
   m_CenterOfMass: {x: 0, y: -0.15, z: 0}
@@ -563,6 +563,19 @@ Transform:
   - {fileID: 2118256307}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &401552709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 401552706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df7619254c1df564bb5f4b5835d65462, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Speedometer
+  speedText: {fileID: 1817235965}
 --- !u!114 &401552710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -685,23 +698,6 @@ MonoBehaviour:
   - name: "\u041B\u0435\u0434 / \u041C\u043E\u043A\u0440\u044B\u0439 \u043A\u0430\u043C\u0435\u043D\u044C"
     forwardStiffness: 0.2
     sidewaysStiffness: 0.15
---- !u!114 &401552715
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 401552706}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3dbb3f54ddc118b418e675679a8a7765, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CameraModeController
-  targetVolume: {fileID: 2118256312}
-  defaultProfile: {fileID: 11400000, guid: 0e74745890bba324a81146020d2bba34, type: 2}
-  nightProfile: {fileID: 11400000, guid: 27faec6d673d9fc468f6de1fa5cb0b1d, type: 2}
-  toggleAction: {fileID: 1121982283911032808, guid: bafa7c7e43fdeb1408d30b24a8492fe3, type: 3}
-  modeText: {fileID: 0}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -2599,10 +2595,11 @@ GameObject:
   m_Component:
   - component: {fileID: 2118256307}
   - component: {fileID: 2118256311}
+  - component: {fileID: 2118256310}
   - component: {fileID: 2118256309}
-  - component: {fileID: 2118256312}
+  - component: {fileID: 2118256308}
   m_Layer: 0
-  m_Name: Camera
+  m_Name: FollowCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2623,6 +2620,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 401552708}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2118256308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118256306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c526251d6902a640920f6b7f7f839a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraFollow
+  robotBody: {fileID: 401552708}
+  localOffset: {x: 0, y: 0, z: 0.88}
 --- !u!114 &2118256309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2646,7 +2657,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 1
+  m_RenderPostProcessing: 0
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -2667,6 +2678,14 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!81 &2118256310
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118256306}
+  m_Enabled: 1
 --- !u!20 &2118256311
 Camera:
   m_ObjectHideFlags: 0
@@ -2718,23 +2737,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!114 &2118256312
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2118256306}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
-  m_IsGlobal: 1
-  priority: 0
-  blendDistance: 0
-  weight: 1
-  sharedProfile: {fileID: 11400000, guid: 0e74745890bba324a81146020d2bba34, type: 2}
 --- !u!1 &2133190179
 GameObject:
   m_ObjectHideFlags: 0
