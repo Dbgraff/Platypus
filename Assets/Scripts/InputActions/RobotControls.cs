@@ -154,6 +154,24 @@ public partial class @RobotControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ReturnToBase"",
+                    ""type"": ""Button"",
+                    ""id"": ""b88f40ee-d4ff-4848-994f-b35a58cad584"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CancelReturn"",
+                    ""type"": ""Button"",
+                    ""id"": ""3f747be7-8d9d-4fd1-acec-96b6165860bd"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -365,6 +383,50 @@ public partial class @RobotControls: IInputActionCollection2, IDisposable
                     ""action"": ""ToggleGasAnalyzer"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a9bb8895-6877-45b8-ad8b-b62063868a61"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ReturnToBase"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""85d63547-701a-4065-a612-84c533a7b1ec"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ReturnToBase"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""91f73f0a-cffe-475e-9031-6eae2d2f50ab"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CancelReturn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cfc9a3a9-cff4-4765-8e77-44fb99c7f0a1"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CancelReturn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -553,6 +615,8 @@ public partial class @RobotControls: IInputActionCollection2, IDisposable
         m_Robot_ToggleControlMode = m_Robot.FindAction("ToggleControlMode", throwIfNotFound: true);
         m_Robot_ToggleNightVision = m_Robot.FindAction("ToggleNightVision", throwIfNotFound: true);
         m_Robot_ToggleGasAnalyzer = m_Robot.FindAction("ToggleGasAnalyzer", throwIfNotFound: true);
+        m_Robot_ReturnToBase = m_Robot.FindAction("ReturnToBase", throwIfNotFound: true);
+        m_Robot_CancelReturn = m_Robot.FindAction("CancelReturn", throwIfNotFound: true);
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
@@ -650,6 +714,8 @@ public partial class @RobotControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Robot_ToggleControlMode;
     private readonly InputAction m_Robot_ToggleNightVision;
     private readonly InputAction m_Robot_ToggleGasAnalyzer;
+    private readonly InputAction m_Robot_ReturnToBase;
+    private readonly InputAction m_Robot_CancelReturn;
     /// <summary>
     /// Provides access to input actions defined in input action map "Robot".
     /// </summary>
@@ -689,6 +755,14 @@ public partial class @RobotControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Robot/ToggleGasAnalyzer".
         /// </summary>
         public InputAction @ToggleGasAnalyzer => m_Wrapper.m_Robot_ToggleGasAnalyzer;
+        /// <summary>
+        /// Provides access to the underlying input action "Robot/ReturnToBase".
+        /// </summary>
+        public InputAction @ReturnToBase => m_Wrapper.m_Robot_ReturnToBase;
+        /// <summary>
+        /// Provides access to the underlying input action "Robot/CancelReturn".
+        /// </summary>
+        public InputAction @CancelReturn => m_Wrapper.m_Robot_CancelReturn;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -736,6 +810,12 @@ public partial class @RobotControls: IInputActionCollection2, IDisposable
             @ToggleGasAnalyzer.started += instance.OnToggleGasAnalyzer;
             @ToggleGasAnalyzer.performed += instance.OnToggleGasAnalyzer;
             @ToggleGasAnalyzer.canceled += instance.OnToggleGasAnalyzer;
+            @ReturnToBase.started += instance.OnReturnToBase;
+            @ReturnToBase.performed += instance.OnReturnToBase;
+            @ReturnToBase.canceled += instance.OnReturnToBase;
+            @CancelReturn.started += instance.OnCancelReturn;
+            @CancelReturn.performed += instance.OnCancelReturn;
+            @CancelReturn.canceled += instance.OnCancelReturn;
         }
 
         /// <summary>
@@ -768,6 +848,12 @@ public partial class @RobotControls: IInputActionCollection2, IDisposable
             @ToggleGasAnalyzer.started -= instance.OnToggleGasAnalyzer;
             @ToggleGasAnalyzer.performed -= instance.OnToggleGasAnalyzer;
             @ToggleGasAnalyzer.canceled -= instance.OnToggleGasAnalyzer;
+            @ReturnToBase.started -= instance.OnReturnToBase;
+            @ReturnToBase.performed -= instance.OnReturnToBase;
+            @ReturnToBase.canceled -= instance.OnReturnToBase;
+            @CancelReturn.started -= instance.OnCancelReturn;
+            @CancelReturn.performed -= instance.OnCancelReturn;
+            @CancelReturn.canceled -= instance.OnCancelReturn;
         }
 
         /// <summary>
@@ -1071,6 +1157,20 @@ public partial class @RobotControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnToggleGasAnalyzer(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ReturnToBase" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnReturnToBase(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "CancelReturn" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnCancelReturn(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player" which allows adding and removing callbacks.
