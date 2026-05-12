@@ -24,7 +24,9 @@ public class RobotController : MonoBehaviour
     private float throttleInput = 0f; 
     private float steerInput = 0f;
 
-    private bool isSplitMode = true;     // текущий режим клавиатуры
+    private bool isSplitMode = true;
+    //private bool externalControl = false;
+
     private bool isGamepadConnected => Gamepad.current != null;
 
     void Awake()
@@ -62,6 +64,7 @@ public class RobotController : MonoBehaviour
 
     void FixedUpdate()
     {
+
         float left = 0f, right = 0f;
 
         if (isGamepadConnected)
@@ -117,4 +120,18 @@ public class RobotController : MonoBehaviour
     }
 
     private void OnDestroy() => controls?.Dispose();
+
+    /// <summary>
+    /// Принудительная подача команд на гусеницы (используется системой автовозврата).
+    /// Значения left и right в диапазоне [-1, 1].
+    /// </summary>
+    public void ApplyManualControl(float leftNormalized, float rightNormalized)
+    {
+        ApplyTrackForces(leftNormalized, rightNormalized);
+    }
+
+    public float GetMaxForwardSpeed()
+    {
+        return maxForwardSpeed;
+    }
 }
