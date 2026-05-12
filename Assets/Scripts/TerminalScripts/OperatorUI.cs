@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.InputSystem;
 
 public class OperatorUI : MonoBehaviour
 {
@@ -33,6 +32,7 @@ public class OperatorUI : MonoBehaviour
     [Header("Обучение")]
     [SerializeField] private GameObject tutorialPanel;
     [SerializeField] private TextMeshProUGUI tutorialInstructionText;
+    [SerializeField] private TextMeshProUGUI tutorialKeyHintText;
     [SerializeField] private TextMeshProUGUI tutorialStatusText;
 
     [Header("Ссылки на системы")]
@@ -46,8 +46,7 @@ public class OperatorUI : MonoBehaviour
 
     private void Start()
     {
-
-        // Изначально скрываем всё
+        // Скрываем все вспомогательные панели при старте
         if (mainPanel != null) mainPanel.SetActive(false);
         if (gasWarningPanel != null) gasWarningPanel.SetActive(false);
         if (returnWarningPanel != null) returnWarningPanel.SetActive(false);
@@ -128,7 +127,7 @@ public class OperatorUI : MonoBehaviour
         {
             if (inGas)
             {
-                gasStatusText.text = "ОБНАРУЖЕНО";
+                gasStatusText.text = "Обнаружено";
                 gasStatusText.color = Color.red;
             }
             else
@@ -214,21 +213,41 @@ public class OperatorUI : MonoBehaviour
     // Для обучения
     // ===========================
 
-    public void ShowTutorialStep(string instruction, string status)
+    public void ShowTutorialStep(string instruction, string status, string keyHint = "")
     {
-        if (tutorialPanel != null) tutorialPanel.SetActive(true);
-        if (tutorialInstructionText != null) tutorialInstructionText.text = instruction;
-        if (tutorialStatusText != null) tutorialStatusText.text = status;
+        if (tutorialPanel != null)
+            tutorialPanel.SetActive(true);
+
+        if (tutorialInstructionText != null)
+            tutorialInstructionText.text = instruction;
+
+        if (tutorialKeyHintText != null)
+        {
+            if (!string.IsNullOrEmpty(keyHint))
+            {
+                tutorialKeyHintText.text = $"[ Клавиши: {keyHint} ]";
+                tutorialKeyHintText.gameObject.SetActive(true);
+            }
+            else
+            {
+                tutorialKeyHintText.gameObject.SetActive(false);
+            }
+        }
+
+        if (tutorialStatusText != null)
+            tutorialStatusText.text = status;
     }
 
     public void HideTutorial()
     {
-        if (tutorialPanel != null) tutorialPanel.SetActive(false);
+        if (tutorialPanel != null)
+            tutorialPanel.SetActive(false);
     }
 
     public void UpdateTutorialStatus(string status)
     {
-        if (tutorialStatusText != null) tutorialStatusText.text = status;
+        if (tutorialStatusText != null)
+            tutorialStatusText.text = status;
     }
 
     // ===========================
@@ -242,5 +261,4 @@ public class OperatorUI : MonoBehaviour
         GasType.HydrogenSulfide => "Сероводород",
         _ => "Неизвестный"
     };
-
 }
