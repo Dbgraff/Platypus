@@ -16,6 +16,14 @@ public class GasAnalyzer : MonoBehaviour
 
     private HashSet<GasZone> activeZones = new HashSet<GasZone>();
 
+    private void Start()
+    {
+        activeZones.Clear();
+        IsInGasZone = false;
+        CurrentGasType = null;
+        CurrentConcentration = 0f;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<GasZone>(out var zone))
@@ -27,6 +35,7 @@ public class GasAnalyzer : MonoBehaviour
         if (other.TryGetComponent<GasZone>(out var zone))
             activeZones.Remove(zone);
     }
+    
 
     private void Update()
     {
@@ -61,5 +70,8 @@ public class GasAnalyzer : MonoBehaviour
         else if (!IsInGasZone && wasInGas) OnGasCleared?.Invoke();
         if (Math.Abs(prevConcentration - CurrentConcentration) > 0.01f)
             OnConcentrationChanged?.Invoke(CurrentConcentration);
+
+        if (IsInGasZone)
+            Debug.Log($"ГАЗ: {CurrentGasType}, концентрация: {CurrentConcentration:F2}");
     }
 }

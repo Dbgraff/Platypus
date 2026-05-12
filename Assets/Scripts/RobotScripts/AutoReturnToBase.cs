@@ -121,8 +121,8 @@ public class AutoReturnToBase : MonoBehaviour
         if (rb != null)
         {
             rb.isKinematic = true;
-            rb.linearVelocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
+            //rb.linearVelocity = Vector3.zero;
+            //rb.angularVelocity = Vector3.zero;
         }
 
         agent.enabled = true;
