@@ -46,11 +46,11 @@ public class OperatorUI : MonoBehaviour
 
     private void Start()
     {
-        // Скрываем все вспомогательные панели при старте
-        if (mainPanel != null) mainPanel.SetActive(false);
-        if (gasWarningPanel != null) gasWarningPanel.SetActive(false);
-        if (returnWarningPanel != null) returnWarningPanel.SetActive(false);
-        if (tutorialPanel != null) tutorialPanel.SetActive(false);
+        //// Скрываем все вспомогательные панели при старте
+        //if (mainPanel != null) mainPanel.SetActive(false);
+        //if (gasWarningPanel != null) gasWarningPanel.SetActive(false);
+        //if (returnWarningPanel != null) returnWarningPanel.SetActive(false);
+        //if (tutorialPanel != null) tutorialPanel.SetActive(false);
     }
 
     private void Update()
