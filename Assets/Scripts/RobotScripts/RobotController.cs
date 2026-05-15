@@ -119,16 +119,6 @@ public class RobotController : MonoBehaviour
         return input * maxMotorForce * speedFactor;
     }
 
-    public float GetMaxForwardSpeed()
-    {
-        return maxForwardSpeed;
-    }
-
-    public void ApplyManualControl(float leftNormalized, float rightNormalized)
-    {
-        // Вызываем твой же метод ApplyTrackForces
-        ApplyTrackForces(leftNormalized, rightNormalized);
-    }
     private void OnDestroy() => controls?.Dispose();
 
     /// <summary>
