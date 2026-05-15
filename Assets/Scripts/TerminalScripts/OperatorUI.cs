@@ -44,15 +44,6 @@ public class OperatorUI : MonoBehaviour
 
     private bool isVisible = false;
 
-    private void Start()
-    {
-        // Скрываем все вспомогательные панели при старте
-        if (mainPanel != null) mainPanel.SetActive(false);
-        if (gasWarningPanel != null) gasWarningPanel.SetActive(false);
-        if (returnWarningPanel != null) returnWarningPanel.SetActive(false);
-        if (tutorialPanel != null) tutorialPanel.SetActive(false);
-    }
-
     private void Update()
     {
         if (!isVisible) return;
@@ -199,8 +190,9 @@ public class OperatorUI : MonoBehaviour
 
     public void Show()
     {
+        Debug.Log($"[OperatorUI] Show вызван. mainPanel: {(mainPanel != null ? mainPanel.name : "NULL")}, текущий activeSelf: {(mainPanel != null ? mainPanel.activeSelf.ToString() : "—")}");
         isVisible = true;
-        if (mainPanel != null) mainPanel.SetActive(true);
+        mainPanel.SetActive(true);
     }
 
     public void Hide()

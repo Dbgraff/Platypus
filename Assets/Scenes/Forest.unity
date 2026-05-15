@@ -585,7 +585,11 @@ MonoBehaviour:
   robot: {fileID: 401552706}
   operatorUI: {fileID: 641932915}
   tutorialManager: {fileID: 114099607}
+<<<<<<< Updated upstream
   autoReturn: {fileID: 0}
+=======
+  autoReturn: {fileID: 401552719}
+>>>>>>> Stashed changes
 --- !u!114 &114099607
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -605,8 +609,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ca147f5fbe4a442478e63e694360a658, type: 2}
   - {fileID: 11400000, guid: 85dc68ef2ab2ece499b83c528b4d0890, type: 2}
   - {fileID: 11400000, guid: aa89304739defe1489966c4a96a01f39, type: 2}
+<<<<<<< Updated upstream
   - {fileID: 11400000, guid: 7c1d6bb68affa544d85f4f1429db985d, type: 2}
   - {fileID: 11400000, guid: 23235a168c64cb448a5c0018d0ba1c26, type: 2}
+=======
+  - {fileID: 11400000, guid: 23235a168c64cb448a5c0018d0ba1c26, type: 2}
+  - {fileID: 11400000, guid: 7c1d6bb68affa544d85f4f1429db985d, type: 2}
+>>>>>>> Stashed changes
   - {fileID: 11400000, guid: febed987ab4360545acfb57932fba431, type: 2}
   - {fileID: 11400000, guid: 19dfd34661aa3a14c97e8029a1519e6e, type: 2}
   - {fileID: 11400000, guid: b3ec638f4878ace4088e00731189eb22, type: 2}
@@ -615,7 +624,11 @@ MonoBehaviour:
   operatorUI: {fileID: 641932915}
   cameraModeController: {fileID: 401552715}
   gasAnalyzer: {fileID: 401552720}
+<<<<<<< Updated upstream
   autoReturn: {fileID: 0}
+=======
+  autoReturn: {fileID: 401552719}
+>>>>>>> Stashed changes
   robotRb: {fileID: 401552707}
   stepCompletionDelay: 1.5
 --- !u!1 &137632070
@@ -1590,7 +1603,6 @@ RectTransform:
   - {fileID: 1415111592}
   - {fileID: 1447857768}
   - {fileID: 1166499463}
-  - {fileID: 1383016830}
   m_Father: {fileID: 641932911}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1685,6 +1697,10 @@ GameObject:
   - component: {fileID: 401552713}
   - component: {fileID: 401552714}
   - component: {fileID: 401552715}
+<<<<<<< Updated upstream
+=======
+  - component: {fileID: 401552719}
+>>>>>>> Stashed changes
   - component: {fileID: 401552720}
   - component: {fileID: 401552721}
   m_Layer: 0
@@ -1881,6 +1897,31 @@ MonoBehaviour:
   nightProfile: {fileID: 11400000, guid: 27faec6d673d9fc468f6de1fa5cb0b1d, type: 2}
   toggleAction: {fileID: 1121982283911032808, guid: bafa7c7e43fdeb1408d30b24a8492fe3, type: 3}
   modeText: {fileID: 0}
+<<<<<<< Updated upstream
+=======
+--- !u!114 &401552719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 401552706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58f07031dbfa6df40aa6b97ee63300c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoReturnToBase
+  basePoint: {fileID: 1554564269}
+  signalRange: 100
+  maxSpeed: 4
+  arrivalDistance: 3
+  steeringGain: 2.5
+  speedGain: 1.2
+  stuckTimeThreshold: 2
+  stuckSpeedThreshold: 0.2
+  returnAction: {fileID: 2379844607052817647, guid: bafa7c7e43fdeb1408d30b24a8492fe3, type: 3}
+  cancelAction: {fileID: -823104195561151460, guid: bafa7c7e43fdeb1408d30b24a8492fe3, type: 3}
+>>>>>>> Stashed changes
 --- !u!114 &401552720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2556,6 +2597,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 349082919}
+  - {fileID: 1383016830}
   m_Father: {fileID: 2118256307}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -4456,13 +4498,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1383016829}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1022066630}
-  m_Father: {fileID: 349082919}
+  m_Father: {fileID: 641932911}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}

@@ -176,7 +176,10 @@ public class TerminalManager : MonoBehaviour
     {
         yield return StartCoroutine(FadeOutMenu());
         SetRobotActive(true);
-        if (operatorUI != null) operatorUI.Show();
+        if (operatorUI != null)
+        {
+            operatorUI.Show();
+        }
         Debug.Log("Свободная игра запущена");
     }
 
