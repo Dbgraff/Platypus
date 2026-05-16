@@ -578,14 +578,13 @@ MonoBehaviour:
   trainingButton: {fileID: 1631202206}
   quitButton: {fileID: 1595427801}
   screenMaterial: {fileID: 2100000, guid: c88e1c947e882e44a87e330f9f35dfc7, type: 2}
-  noiseOverlay: {fileID: 0}
   bootDelay: 0.3
   bootDuration: 1.5
   menuFadeDuration: 0.8
   robot: {fileID: 401552706}
   operatorUI: {fileID: 641932915}
   tutorialManager: {fileID: 114099607}
-  autoReturn: {fileID: 0}
+  autoReturn: {fileID: 401552721}
 --- !u!114 &114099607
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -615,7 +614,7 @@ MonoBehaviour:
   operatorUI: {fileID: 641932915}
   cameraModeController: {fileID: 401552715}
   gasAnalyzer: {fileID: 401552720}
-  autoReturn: {fileID: 0}
+  autoReturn: {fileID: 401552721}
   robotRb: {fileID: 401552707}
   stepCompletionDelay: 1.5
 --- !u!1 &137632070
@@ -1880,7 +1879,6 @@ MonoBehaviour:
   defaultProfile: {fileID: 11400000, guid: 0e74745890bba324a81146020d2bba34, type: 2}
   nightProfile: {fileID: 11400000, guid: 27faec6d673d9fc468f6de1fa5cb0b1d, type: 2}
   toggleAction: {fileID: 1121982283911032808, guid: bafa7c7e43fdeb1408d30b24a8492fe3, type: 3}
-  modeText: {fileID: 0}
 --- !u!114 &401552720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2614,7 +2612,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 2118256311}
-  m_PlaneDistance: 0.5
+  m_PlaneDistance: 0.1
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -2640,23 +2638,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::OperatorUI
   mainPanel: {fileID: 349082918}
   speedText: {fileID: 187738681}
-  speedFillBar: {fileID: 0}
   signalText: {fileID: 2106047026}
-  signalBar: {fileID: 0}
-  distanceText: {fileID: 0}
-  gasWarningPanel: {fileID: 0}
   gasStatusText: {fileID: 34318235}
   gasTypeText: {fileID: 878522248}
   gasConcentrationText: {fileID: 1723444014}
   cameraModeText: {fileID: 261566188}
-  returnStatusText: {fileID: 0}
-  returnWarningPanel: {fileID: 0}
   tutorialPanel: {fileID: 1383016829}
   tutorialInstructionText: {fileID: 137632072}
   tutorialKeyHintText: {fileID: 244964882}
   tutorialStatusText: {fileID: 1678343154}
   robotRb: {fileID: 401552707}
-  autoReturn: {fileID: 0}
+  autoReturn: {fileID: 401552721}
   cameraModeController: {fileID: 401552715}
   gasAnalyzer: {fileID: 401552720}
   terminalManager: {fileID: 114099606}
@@ -2795,7 +2787,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4252027711034406305, guid: 15ba0ee0b99cd1640bd19e9d7a451b11, type: 3}
       propertyPath: zoneColor.a
-      value: 0.39
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 4252027711034406305, guid: 15ba0ee0b99cd1640bd19e9d7a451b11, type: 3}
       propertyPath: zoneColor.b
