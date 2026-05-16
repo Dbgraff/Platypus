@@ -12,7 +12,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private OperatorUI operatorUI;
     [SerializeField] private CameraModeController cameraModeController;
     [SerializeField] private GasAnalyzer gasAnalyzer;
-    [SerializeField] private AutoReturnToBase autoReturn;
+    [SerializeField] private AutonomousReturn autoReturn;
     [SerializeField] private Rigidbody robotRb;
 
     [Header("Настройки")]
@@ -180,19 +180,5 @@ public class TutorialManager : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         operatorUI?.HideTutorial();
-    }
-
-    public void SkipCurrentStep()
-    {
-        if (!isTraining) return;
-        StopAllCoroutines();
-        currentStepIndex++;
-        if (currentStepIndex >= steps.Length)
-            CompleteTraining();
-        else
-        {
-            enabled = true;
-            ShowCurrentStep();
-        }
     }
 }

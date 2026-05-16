@@ -20,7 +20,6 @@ public class TerminalManager : MonoBehaviour
 
     [Header("Эффекты экрана")]
     [SerializeField] private Material screenMaterial;
-    [SerializeField] private GameObject noiseOverlay;
     [SerializeField] private float bootDelay = 0.3f;
     [SerializeField] private float bootDuration = 1.5f;
     [SerializeField] private float menuFadeDuration = 0.8f;
@@ -29,7 +28,7 @@ public class TerminalManager : MonoBehaviour
     [SerializeField] private GameObject robot;
     [SerializeField] private OperatorUI operatorUI;
     [SerializeField] private TutorialManager tutorialManager;
-    [SerializeField] private AutoReturnToBase autoReturn;
+    [SerializeField] private AutonomousReturn autoReturn;
 
     private bool robotActive = false;
     private bool isBooting = true;
@@ -65,13 +64,9 @@ public class TerminalManager : MonoBehaviour
 
         if (screenMaterial != null)
             screenMaterial.SetFloat("_Brightness", 0f);
-        if (noiseOverlay != null)
-            noiseOverlay.SetActive(false);
 
         yield return new WaitForSeconds(bootDelay);
 
-        if (noiseOverlay != null)
-            noiseOverlay.SetActive(true);
 
         yield return new WaitForSeconds(0.2f);
 
@@ -87,9 +82,6 @@ public class TerminalManager : MonoBehaviour
 
         if (screenMaterial != null)
             screenMaterial.SetFloat("_Brightness", 1f);
-
-        if (noiseOverlay != null)
-            noiseOverlay.SetActive(false);
 
         yield return new WaitForSeconds(0.3f);
 
@@ -193,66 +185,6 @@ public class TerminalManager : MonoBehaviour
         if (operatorUI != null) operatorUI.Show();
         if (tutorialManager != null) tutorialManager.StartTraining();
         Debug.Log("Обучение запущено");
-    }
-
-    public void ReturnToMenu()
-    {
-        if (autoReturn != null && autoReturn.IsReturning)
-            autoReturn.CancelReturn();
-
-        if (tutorialManager != null && tutorialManager.IsTraining)
-            tutorialManager.StopTraining();
-
-        SetRobotActive(false);
-
-        if (operatorUI != null)
-            operatorUI.Hide();
-
-        StartCoroutine(TransitionToMenu());
-    }
-
-    private IEnumerator TransitionToMenu()
-    {
-        if (screenMaterial != null)
-        {
-            float elapsed = 0f;
-            float duration = 0.3f;
-            while (elapsed < duration)
-            {
-                elapsed += Time.deltaTime;
-                screenMaterial.SetFloat("_Brightness", Mathf.Lerp(1f, 0f, elapsed / duration));
-                yield return null;
-            }
-            screenMaterial.SetFloat("_Brightness", 0f);
-        }
-
-        yield return new WaitForSeconds(0.2f);
-
-        if (mainMenuPanel != null)
-        {
-            mainMenuPanel.SetActive(true);
-            if (mainMenuCanvasGroup != null)
-            {
-                mainMenuCanvasGroup.alpha = 0f;
-                mainMenuCanvasGroup.interactable = false;
-                mainMenuCanvasGroup.blocksRaycasts = false;
-            }
-        }
-
-        if (screenMaterial != null)
-        {
-            float elapsed = 0f;
-            float duration = 0.3f;
-            while (elapsed < duration)
-            {
-                elapsed += Time.deltaTime;
-                screenMaterial.SetFloat("_Brightness", Mathf.Lerp(0f, 1f, elapsed / duration));
-                yield return null;
-            }
-            screenMaterial.SetFloat("_Brightness", 1f);
-        }
-
-        yield return StartCoroutine(FadeInMenu());
     }
 
     private void QuitGame()

@@ -36,8 +36,8 @@ public class TutorialStep : ScriptableObject
     public string instructionText;
 
     [Header("Дополнительная информация")]
-    public string keyHint;                // "W", "O", "W+O" и т.д.
-    public Sprite keyIcon;                // Иконка клавиши (опционально)
+    public string keyHint;    
+    public Sprite keyIcon;                
 
     [Header("Параметры для заданий")]
     public float targetSpeed = 10f;

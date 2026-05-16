@@ -16,10 +16,8 @@ public class GasZone : MonoBehaviour
     [SerializeField] private float minAlpha = 0.05f;
     [SerializeField] private float maxAlpha = 0.4f;
 
-    // Приватные
     private ParticleSystem particles;
     private SphereCollider sphereCollider;
-    private Material particleMaterial;
 
     public GasType Type => gasType;
     public float Concentration => concentration;

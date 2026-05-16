@@ -9,25 +9,17 @@ public class OperatorUI : MonoBehaviour
 
     [Header("Скорость")]
     [SerializeField] private TextMeshProUGUI speedText;
-    [SerializeField] private Image speedFillBar;
 
     [Header("Сигнал связи")]
     [SerializeField] private TextMeshProUGUI signalText;
-    [SerializeField] private Image signalBar;
-    [SerializeField] private TextMeshProUGUI distanceText;
 
     [Header("Газоанализатор")]
-    [SerializeField] private GameObject gasWarningPanel;
     [SerializeField] private TextMeshProUGUI gasStatusText;
     [SerializeField] private TextMeshProUGUI gasTypeText;
     [SerializeField] private TextMeshProUGUI gasConcentrationText;
 
     [Header("Режим камеры")]
     [SerializeField] private TextMeshProUGUI cameraModeText;
-
-    [Header("Автовозврат")]
-    [SerializeField] private TextMeshProUGUI returnStatusText;
-    [SerializeField] private GameObject returnWarningPanel;
 
     [Header("Обучение")]
     [SerializeField] private GameObject tutorialPanel;
@@ -37,21 +29,12 @@ public class OperatorUI : MonoBehaviour
 
     [Header("Ссылки на системы")]
     [SerializeField] private Rigidbody robotRb;
-    [SerializeField] private AutoReturnToBase autoReturn;
+    [SerializeField] private AutonomousReturn autoReturn;
     [SerializeField] private CameraModeController cameraModeController;
     [SerializeField] private GasAnalyzer gasAnalyzer;
     [SerializeField] private TerminalManager terminalManager;
 
     private bool isVisible = false;
-
-    private void Start()
-    {
-        //// Скрываем все вспомогательные панели при старте
-        //if (mainPanel != null) mainPanel.SetActive(false);
-        //if (gasWarningPanel != null) gasWarningPanel.SetActive(false);
-        //if (returnWarningPanel != null) returnWarningPanel.SetActive(false);
-        //if (tutorialPanel != null) tutorialPanel.SetActive(false);
-    }
 
     private void Update()
     {
@@ -61,12 +44,7 @@ public class OperatorUI : MonoBehaviour
         UpdateSignal();
         UpdateGasDetector();
         UpdateCameraMode();
-        UpdateReturnStatus();
     }
-
-    // ===========================
-    // Обновление данных
-    // ===========================
 
     private void UpdateSpeed()
     {
@@ -76,20 +54,13 @@ public class OperatorUI : MonoBehaviour
 
         if (speedText != null)
             speedText.text = $"{speedKMH:F1} км/ч";
-
-        if (speedFillBar != null)
-            speedFillBar.fillAmount = Mathf.Clamp01(speedKMH / 15f);
     }
 
     private void UpdateSignal()
     {
         if (autoReturn == null) return;
 
-        float distance = autoReturn.DistanceToBase;
         float signal = autoReturn.SignalStrength;
-
-        if (distanceText != null)
-            distanceText.text = $"Дальность: {distance:F0} м";
 
         if (signalText != null)
         {
@@ -104,13 +75,6 @@ public class OperatorUI : MonoBehaviour
                 signalText.color = Color.red;
         }
 
-        if (signalBar != null)
-        {
-            signalBar.fillAmount = signal;
-            if (signal > 0.7f) signalBar.color = Color.green;
-            else if (signal > 0.3f) signalBar.color = Color.yellow;
-            else signalBar.color = Color.red;
-        }
     }
 
     private void UpdateGasDetector()
@@ -119,9 +83,6 @@ public class OperatorUI : MonoBehaviour
 
         bool inGas = gasAnalyzer.IsInGasZone;
         float concentration = gasAnalyzer.CurrentConcentration;
-
-        if (gasWarningPanel != null)
-            gasWarningPanel.SetActive(inGas);
 
         if (gasStatusText != null)
         {
@@ -164,39 +125,6 @@ public class OperatorUI : MonoBehaviour
         cameraModeText.text = $"Режим: {cameraModeController.CurrentModeName}";
     }
 
-    private void UpdateReturnStatus()
-    {
-        if (autoReturn == null) return;
-
-        bool isReturning = autoReturn.IsReturning;
-        bool signalLost = autoReturn.SignalLost;
-
-        if (returnWarningPanel != null)
-            returnWarningPanel.SetActive(isReturning);
-
-        if (returnStatusText != null)
-        {
-            if (signalLost)
-            {
-                returnStatusText.text = "ПОТЕРЯ СВЯЗИ\nАвтовозврат...";
-                returnStatusText.color = Color.red;
-            }
-            else if (isReturning)
-            {
-                returnStatusText.text = "Автовозврат...";
-                returnStatusText.color = Color.yellow;
-            }
-            else
-            {
-                returnStatusText.text = "";
-            }
-        }
-    }
-
-    // ===========================
-    // Управление видимостью
-    // ===========================
-
     public void Show()
     {
         isVisible = true;
@@ -208,10 +136,6 @@ public class OperatorUI : MonoBehaviour
         isVisible = false;
         if (mainPanel != null) mainPanel.SetActive(false);
     }
-
-    // ===========================
-    // Для обучения
-    // ===========================
 
     public void ShowTutorialStep(string instruction, string status, string keyHint = "")
     {
@@ -249,10 +173,6 @@ public class OperatorUI : MonoBehaviour
         if (tutorialStatusText != null)
             tutorialStatusText.text = status;
     }
-
-    // ===========================
-    // Вспомогательные
-    // ===========================
 
     private string GetGasName(GasType type) => type switch
     {

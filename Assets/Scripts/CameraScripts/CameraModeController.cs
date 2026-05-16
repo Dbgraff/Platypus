@@ -15,10 +15,7 @@ public class CameraModeController : MonoBehaviour
     [Header("Управление")]
     [SerializeField] private InputActionReference toggleAction;
 
-    [Header("UI")]
-    [SerializeField] private TextMeshProUGUI modeText;
-
-    private enum Mode { Default, Night, Thermal }
+    private enum Mode { Default, Night }
     private Mode currentMode = Mode.Default;
 
     private void Awake()
@@ -59,16 +56,6 @@ public class CameraModeController : MonoBehaviour
             case Mode.Night:
                 targetVolume.profile = nightProfile;
                 break;
-        }
-
-        if (modeText != null)
-        {
-            modeText.text = mode switch
-            {
-                Mode.Default => "Режим: Обычный",
-                Mode.Night => "Режим: ПНВ",
-                _ => ""
-            };
         }
     }
 

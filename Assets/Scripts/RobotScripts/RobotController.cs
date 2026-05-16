@@ -13,12 +13,11 @@ public class RobotController : MonoBehaviour
     [SerializeField] private float maxReverseSpeed = 3f;
 
     [Header("Keyboard Mode")]
-    [SerializeField] private bool startInSplitMode = true; // раздельный режим по умолчанию
+    [SerializeField] private bool startInSplitMode = true;
 
     private RobotControls controls;
     private Rigidbody rb;
 
-    // Входы
     private float leftTrackInput = 0f;
     private float rightTrackInput = 0f;
     private float throttleInput = 0f; 
