@@ -24,7 +24,6 @@ public class RobotController : MonoBehaviour
     private float steerInput = 0f;
 
     private bool isSplitMode = true;
-    //private bool externalControl = false;
 
     private bool isGamepadConnected => Gamepad.current != null;
 
@@ -34,7 +33,6 @@ public class RobotController : MonoBehaviour
         controls = new RobotControls();
         controls.Robot.Enable();
 
-        // Подписка на события
         controls.Robot.LeftTrack.performed += ctx => leftTrackInput = ctx.ReadValue<float>();
         controls.Robot.LeftTrack.canceled += ctx => leftTrackInput = 0f;
 
@@ -75,7 +73,6 @@ public class RobotController : MonoBehaviour
         {
             if (isSplitMode)
             {
-                // Раздельное управление клавиатурой
                 left = leftTrackInput;
                 right = rightTrackInput;
             }
@@ -109,11 +106,9 @@ public class RobotController : MonoBehaviour
         float targetDirection = Mathf.Sign(input);
         float maxAllowedSpeed = (targetDirection > 0) ? maxForwardSpeed : maxReverseSpeed;
 
-        // Если скорость уже превышает лимит в этом направлении, не добавляем момент
         float speedInDirection = Vector3.Dot(rb.linearVelocity, transform.forward) * targetDirection;
         if (speedInDirection >= maxAllowedSpeed) return 0f;
 
-        // Плавное ограничение при приближении к макс. скорости
         float speedFactor = Mathf.Clamp01(1f - speedInDirection / maxAllowedSpeed);
         return input * maxMotorForce * speedFactor;
     }
